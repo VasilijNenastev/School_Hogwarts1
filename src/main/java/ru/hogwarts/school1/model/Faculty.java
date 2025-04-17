@@ -1,18 +1,26 @@
 package ru.hogwarts.school1.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 public class Faculty {
     @Id
     @SequenceGenerator(name = "faculty_seq",
             sequenceName = "faculty_sequence", allocationSize = 15)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "faculty_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "faculty_seq")
     private Long id;
     private String name;
     private String color;
+
+    @OneToMany(mappedBy = "faculty")
+    @JsonManagedReference
+    private List<Student> students;
 
     public Faculty(Long id, String name, String color) {
         this.id = id;

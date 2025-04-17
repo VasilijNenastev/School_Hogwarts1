@@ -14,26 +14,31 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
+
         this.facultyService = facultyService;
     }
 
     @GetMapping("{id}")
     public Faculty getFacultyInfo(@PathVariable Long id) {
+
         return facultyService.findFaculty(id);
     }
 
     @GetMapping
     public Collection<Faculty> getAllFaculties() {
+
         return facultyService.getAllFaculties();
     }
 
     @PostMapping
     public Faculty createStudent(@RequestBody Faculty faculty) {
+
         return facultyService.addFaculty(faculty);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity editStudent(@PathVariable Long id, @RequestBody Faculty faculty) {
+    public ResponseEntity editStudent(@PathVariable Long id,
+                                      @RequestBody Faculty faculty) {
 
         Faculty foundFaculty = facultyService.editFaculty(faculty);
         if (foundFaculty==null) {
