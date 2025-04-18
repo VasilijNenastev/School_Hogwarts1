@@ -70,4 +70,7 @@ public class Faculty {
         return Objects.hash(id, name, color);
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
 }

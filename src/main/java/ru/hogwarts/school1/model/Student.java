@@ -69,4 +69,8 @@ public class Student {
     public int hashCode() {
         return Objects.hash(id, name, age);
     }
+
+    public Faculty getFaculty() {
+       return faculty;
+    }
 }
