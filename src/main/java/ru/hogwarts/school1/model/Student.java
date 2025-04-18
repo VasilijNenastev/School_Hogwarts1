@@ -1,5 +1,6 @@
 package ru.hogwarts.school1.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -9,10 +10,16 @@ public class Student {
     @Id
     @SequenceGenerator(name = "student_seq",
     sequenceName = "student_sequence",allocationSize = 20)
-    @GeneratedValue (strategy = GenerationType.SEQUENCE, generator = "student_seq")
+    @GeneratedValue (strategy = GenerationType.SEQUENCE,
+            generator = "student_seq")
     private Long id;
     private String name;
     private int age;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "faculty_id")
+    @JsonBackReference
+    private Faculty faculty;
 
     public Student(Long id, String name, int age) {
         this.id = id;
@@ -54,11 +61,16 @@ public class Student {
         if (o == null || getClass() != o.getClass())
             return false;
         Student student = (Student) o;
-        return age == student.age && Objects.equals(id, student.id) && Objects.equals(name, student.name);
+        return age == student.age && Objects.equals(id, student.id)
+                && Objects.equals(name, student.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, age);
+    }
+
+    public Faculty getFaculty() {
+       return faculty;
     }
 }
